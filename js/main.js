@@ -6,6 +6,17 @@ $(window).load(function() {
         prev: '#nav_topbanner_prev', 
         next: '#nav_topbanner_next'
     });
+    $('#banner_img').cycle({
+    	fx: 'fade',
+    	speed: 500,
+    	timeout: 3000,
+    	pager: '#banner_pager',
+    	pagerEvent: 'mouseover',
+    	pauseOnPagerHover: true,
+    	pagerAnchorBuilder: function (idx, slide) {
+    		return '#banner_pager li:eq(' + (idx) + ') a';
+    	}
+    });    
     $('#power_ban_img').cycle( {
         fx:'scrollHorz', 
         prev:'#power1_prev', 
