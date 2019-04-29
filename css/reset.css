@@ -1,0 +1,67 @@
+html,body { height: 100%; }
+body { font-family: Dotum, Arial, sans-serif; font-weight: normal; color: #222222; font-size: 0.75em; -webkit-text-size-adjust: none; }
+body,div,p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,dt,dd,table,th,td,form,fieldset,legend,input,textarea,select,blockquote,button,address { margin: 0; padding: 0; }
+table { border-collapse: collapse; border-spacing: 0; }
+img,fieldset,img a { border: 0; }
+img { max-width: 100%; border: 0 }
+img,input,select,textarea { vertical-align: middle; }
+address,caption,cite,code,dfn,em,strong,th,var,i { font-style: normal; font-weight: normal; }
+strong { font-weight: bold; }
+ol,ul,dl { list-style: none; }
+caption,th { text-align: left; }
+abbr, acronym { border: 0; }
+input[type='text'] { font: normal 12px 'Dotum' }
+a { text-decoration: none; color: #80848a; }
+a:hover, a:active { text-decoration: none; color: #80848a; }
+legend, .blind, .accessibility { position: absolute; width: 0; height: 0; overflow: hidden; font-size: 0; line-height: 0; visibility: hidden; z-index: -1; }
+caption { position: static; }
+hr { margin-bottom: 10px; font-size: 0; line-height: 0; border: 1px solid #fff; }
+hr.line { border-bottom: 1px solid #ddd; }
+header,footer,section,article,aside,nav { display: block; margin: 0; }
+
+/* ie8 */
+/* Skip Navigation */
+.accessibility li {
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    top: -2px;
+    width: 100%;
+    display: block;
+    z-index: 200;
+}
+.accessibility li a:active,
+.accessibility li a:focus {
+    position: absolute;
+    background: #E13333;
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    color: #fff;
+    left: 0;
+    top: 0;
+    text-align: center;
+    z-index: 200;
+    border: none;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 1.5;
+    border-bottom: 1px solid #fff;
+    text-decoration: none;
+}
+
+/* input */
+input.checkbox { width: 13px; height: 13px; vertical-align: top }
+* html input { margin: -1px 0 }
+*:first-child+html input { margin: -1px 0 }
+
+/* hidden */
+.hidden { position: absolute; text-indent: -9999px; top: 0; width: 1px; height: 1px; overflow: hidden; display: block }
+
+/* wrap */
+.wrap { min-width: 1280px }
+
+/* placeholder */
+::-webkit-input-placeholder { font-size: 13px }
+::-moz-placeholder { font-size: 13px }
+:-ms-input-placeholder { font-size: 13px }
