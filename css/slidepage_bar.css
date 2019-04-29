@@ -1,0 +1,68 @@
+@charset "utf-8";
+
+	/* 풋스아울렛, 풋스트립 꺼내기 버튼 영역 */
+	div#slidebutton_wrap { position:absolute; width:1600px; display:block; top:0px; right:-1474px; z-index:995 }
+	div#slidebutton_wrap ul { float:left }
+	div#slidebutton_wrap ul #slideopen_1 { width:40px; position:relative; margin:0; padding:0; top:140px; right:0px; z-index:999  }
+	div#slidebutton_wrap ul #slideopen_1 a { display:block; cursor:pointer}
+	div#slidebutton_wrap ul #slideopen_2 {  width:40px; position:relative; margin:0; padding:0; top:100px; right:0px; z-index:998 }
+	div#slidebutton_wrap ul #slideopen_2 a { display:block; cursor:pointer }
+	div#slidebutton_wrap ul li#sideban_close { cursor:pointer; width:20px; font:bold 13px 'NanumBarunGothic'; height:50px; position:relative; padding:5px 0px 0px 5px; background:#000; color:#fff; top:100px; right:-15px; z-index:998 }
+	div.slidepage_hide { width:40px; height:200px; z-index:1500; margin:0; padding:0 }
+	div.slidepage_hide a { display:block; cursor:pointer; width:40px; height:200px }
+	div.slidecarts { width:86px; height:100%; min-height:3000px; background:url('../img/cart_bg.jpg') repeat-y 0px; float:left; z-index:999; box-shadow:0px 0px 15px 0px; *box-shadow:0px 0px 15px 0px }
+	div.slidecarts div#preview_banner { width:75px; height:200px; padding: 0px 5px 5px 8px; cursor:pointer}
+	div.slidecarts a.side_home { display:block; height:34px; }
+	#preview_roll1 { width:75px; height:200px }
+	#preview_roll1 li { display:none }
+	#preview_roll1 li.first { display:block }
+
+	/* 장바구니, 최근본상품 영역 */
+	#quick{position:absolute; width:86px;z-index:1}
+	#quick_list{ margin-bottom:1px;}
+	#quick_list .coupon_cart a{width:86px; height:34px;display:block;color:#ffffff}
+	#quick_list .cart {text-indent:-9999px}
+	#quick_list .cart a{width:86px; height:34px;display:block;background:url('../img/side_cart.jpg') no-repeat 0px; color:#ffffff;}
+	#quick_list span{display:block;width:86px;height:25px;text-align:center;color:#ffffff;}
+	#quick_list .noList{text-align:center;color:#979797;padding:15px 0}
+	#quick_list #view_list li{position:relative;top:1px;width:63px;height:63px;margin:0px 0px 8px 11px;overflow:hidden;text-align:center;}
+	#quick_list #view_list li input{position:absolute;right:0;top:0}
+	#quick_list #view_list #gdscroll{width:86px; max-height:210px; overflow:hidden; z-index:2}
+	#quick_list .sidebar_paging{width:86px; color:#666666; font-size:0; margin-bottom:0px; padding:0px 0px 5px 10px}
+	#quick_list .sidebar_paging img { margin:8px 0px 0px 1px }
+	#quick_list .sidebar_paging a{font-size:0}
+	#quick_list .all{text-align:center;padding:3px 0;}
+	#quick_list .all a{color:#979797;}
+	#quick .latest_header { width:83px; height:25px }
+	#quick span.goodsbg { position:absolute; top:0px; left:-9px; z-index:1; filter:alpha(opacity=30); opacity:0.3}
+	#quick u#total { display:none }
+	img.quick_close { position:absolute;right:2px;top:0;z-index:2}
+	#quick .cart img { width:86px;}
+	#quick span.latest_header { width:86px;height:35px}
+	#quick .side_top { width:86px; height:35px }
+	#quick .side_top img{ margin:0px 0px 0px 0px}
+
+	/* 사이드바 미니배너 영역 */
+	#quick .side_miniban1 { margin: -1px 0px 0px 0px; width:86px; height:51px}
+	#quick .side_miniban2 { margin: 5px 0px 0px 5px; width:76px; height:111px; }
+	#quick .side_miniban3 { margin: 5px 0px 0px 5px; width:76px; height:112px}
+	#quick .side_miniban4 { margin: 5px 0px 0px 5px; width:76px; height:112px}
+
+	/*간편장바구니*/
+	#easyCart{position:absolute;width:330px;padding-left:3px;background:url('../img/easyCart_bg.png') no-repeat;right:95px;top:275px;z-index:100;display:none}
+	#easyCart h2{font-size:0;padding:18px;}
+	#easyCart_ct{width:318px;margin-left:2px;position:relative;}
+	#easyCart table{width:100%;border-top:1px solid #e7e4e5;background:#ffffff;position:relative;}
+	#easyCart table thead th{background:#f2f1f1;color:#909090;font-size:11px;padding:3px 0 2px;}
+	#easyCart table tfoot th{background:#f2f1f1;color:#909090;font-size:11px;padding:8px 0 5px;}
+	#easyCart table tfoot th.ar{color:#ff4200}
+	#easyCart table td{text-align:center;border-bottom:1px solid #e7e4e5;padding:3px 0 0;*padding:4px 0;}
+	#easyCart table .img{width:33px;border:1px solid #dddddd}
+	#easyCart table .al{text-align:left;padding-left:10px}
+	#easyCart table .al a{font-weight:bold;color:#61615f;font-size:11px;letter-spacing:-1px;}
+	#easyCart table .ar{font-family:'NanumGothic';font-weight:bold;color:#ca4f3d;text-align:right;padding-right:20px;*padding-right:25px;}
+	#easyCart table .quantity{background:url('../img/bg_quantity.png') no-repeat;width:12px;padding-right:2px;height:14px;text-align:center;font-family:verdana;font-size:10px;letter-spacing:-2px;margin:0 auto}
+	#easyCart table .total{font-family:verdana;font-size:10px;color:#777777;letter-spacing:-1px;font-weight:bold;}
+	#easyCart .easyCartList{position:relative;width:318px;height:173px;background:#ffffff;overflow:auto;overflow-x:hidden;scrollbar-highlight-color: #CCCCCC;scrollbar-shadow-color: #CCCCCC; scrollbar-arrow-color: #CCCCCC;scrollbar-face-color: #FFFFFF; scrollbar-3dlight-color: #FFFFFF;scrollbar-darkshadow-color: #FFFFFF;scrollbar-track-color: #FFFFFF}
+	#easyCart  .close{position:absolute;top:17px;right:17px}
+	#easyCart .goCart {position:relative; top:0px }

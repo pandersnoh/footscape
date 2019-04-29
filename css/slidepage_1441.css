@@ -1,0 +1,47 @@
+@media screen and (min-width:1441px) {
+	#slidepage_container { background:#000000; position:fixed; width:100%; right:0px; top:0px; z-index: 99999; margin:0; padding:0 }
+	#slide_bg { background:#333; width:1600px; height:3000px; position:absolute; top:0px; right:-1600px; z-index:995; opacity:0.9; filter:Alpha(opacity=90) }
+
+	/* 최근본상품 영역 */
+	.slidepage_header { width:1600px; height:90px; padding-left:15px }	
+	.slidepage_title { width:1200px; height:90px; color:#fff; float:left }
+	#slide_content2 .slidepage_title h2 { display:inline; width:430px; float:left }
+	#slide_content2 .slidepage_title h3 { display:inline; width:600px; margin-top:3px; float:left }
+	#slide_content1 .slidepage_close { float:left; position:absolute; cursor:pointer; text-align:right; top:22px; left: 1340px;}
+	#slide_content2 .slidepage_close { float:left; position:relative; cursor:pointer; text-align:right; top:22px; right:-105px }
+
+	/* 풋스아울렛 영역 */
+	#slide_wrap1 { width:1600px; padding:0px 0px 0px 0px; background:url(../img/outlet_bg.jpg) no-repeat }
+	#slide_content1 { width:1500px; height:3000px; right:-1600px; z-index:997; top:0px; position:absolute; background:url(../img/preview_bg2.jpg?v=20140123) }
+
+	.footsoutlet { width:1390px; height:1000px; margin:0px 0px 0px 15px; overflow:hidden }
+	.footsoutlet span { display:block }
+
+	.outlet01 { width:480px; margin-top:330px; margin-bottom:20px; float:left ; position: relative;}
+	.outlet01_a { width:480px; margin-left:50px }
+	.outlet01_b { width:480px; margin-left:50px }
+	.outlet01_a span, 
+	.outlet01_b span, 
+	.outlet03_a span,
+	.outlet03_b span { float:left; margin-right:40px }
+	.outlet02 { width:380px; height:500px; float:left; overflow:hidden; text-align:center }
+	.outlet03 { width:480px; margin-top:330px; float:right }
+	.outlet03_a { width:480px; float:left }
+	.outlet03_b { width:480px}
+
+
+	/* 풋스트립 영역 */
+	#slide_wrap2 { width:1600px; padding:10px 0px 0px 0px  }
+	#slide_content2 { width:1500px; height:3000px; right:-1600px; z-index:996; top:0px; position:absolute; background:url(../img/preview_bg2.jpg?v=20140123)}
+
+	#slide_content2 .footstrip { width:1385px;  height:1000px; margin:0px 0px 0px 15px; overflow-x:hidden }
+	#slide_content2 .strip01 { width:730px; height:380px; margin:0px 10px 10px 0px; clear:both; float:left }
+	#slide_content2 .strip02 { width:640px; height:380px; overflow:hidden }
+	#slide_content2 .strip03 { width:1500px; height:300px; clear:both}
+
+	#slide_content2 .strip02 ul { width:650px }
+	#slide_content2 .strip02 ul li { width:320px; float:left }
+
+	#slide_content2 .strip03 ul { }
+	#slide_content2 .strip03 ul li { float:left; margin:0px 12px 10px 0px }		
+}	

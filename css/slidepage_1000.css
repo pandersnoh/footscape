@@ -1,0 +1,75 @@
+@media screen and (max-width:1280px) and (min-width:1024px) {
+	#slidepage_container { background:#000000; position:fixed; width:100%; right:0px; top:0px; z-index:99999; margin:0; padding:0 }
+	#slide_bg { background:#333; width:1600px; height:3000px; position:absolute; top:0px; right:-1600px; z-index:995; opacity:0.9; filter:Alpha(opacity=90) }
+
+	/* 최근본상품 영역 */
+	#slidecarts { width:77px; height:100%; min-height:3000px; background:#ccc; float:left; z-index:999 }
+	.slidepage_header { width:1600px; height:65px; padding-left:15px }	
+	.slidepage_title { width:1200px; height:65px; color:#fff; float:left }
+	#slide_content2 .slidepage_title h2 { display:inline; width:280px; float:left }
+	#slide_content2 .slidepage_title h2 img { width:280px }
+	#slide_content2 .slidepage_title h3 { display:inline; width:350px; float:left }
+	#slide_content2 .slidepage_title h3 img { width:350px }
+	#slide_content1 .slidepage_close { float:left; position:absolute; cursor:pointer; text-align:right; top:5px; left:900px }
+	#slide_content2 .slidepage_close { float:left; position:relative; cursor:pointer; text-align:right; top:5px; right:470px }
+	.slidepage_close img { width:40px }
+
+	/* 풋스아울렛 영역 */
+	#slide_wrap1 { width:1000px; padding:0px 0px 0px 0px; background:url(../img/outlet_bg.jpg) no-repeat; background-size:950px 600px  }
+	#slide_content1 { width:1000px; height:3000px; right:-1600px; z-index:997; top:0px; position:absolute; background:url(../img/preview_bg2.jpg?v=20140123) }
+
+	.footsoutlet { width:1000px; height:1000px; margin:0px 0px 0px 15px; overflow:hidden }
+	.footsoutlet span { display:block }
+
+	.outlet01 { width:330px; height:360px; margin-top:240px; float:left; position:relative;}
+	.outlet01_a,
+	.outlet01_b { width:330px; height:180px }
+	.outlet01_a span, 
+	.outlet01_b span, 
+	.outlet03_a span,
+	.outlet03_b span { float:left; width:150px; height:150px }
+	.outlet02 { width:250px; height:500px; float:left; overflow:hidden; text-align:center }
+	.outlet03 { width:330px; height:360px; margin-top:240px; float:left }
+	.outlet03_a,
+	.outlet03_b { width:330px; height:180px; margin-left:30px }
+
+	/* 풋스트립 영역 */
+	#slide_wrap2 { width:1600px; padding:10px 0px 0px 0px  }
+	#slide_content2 { width:1500px; height:3000px; right:-1600px; z-index:996; top:0px; position:absolute; background:url(../img/preview_bg2.jpg?v=20140123)}
+
+	#slide_content2 .footstrip { width:820px; height:726px; margin:0px 0px 0px 15px; overflow-x:hidden }
+	#slide_content2 .strip01 { width:407px; height:225px; margin:0px 5px 0px 0px; clear:both; float:left }
+	#slide_content2 .strip02 { width:360px; height:225px; overflow:hidden }
+	#slide_content2 .strip03 { width:800px; height:225px; clear:both}
+
+	#slide_content2 .strip02 ul { width:650px }
+	#slide_content2 .strip02 ul li { width:180px; margin:0px 5px 0px 0px; float:left }
+
+	#slide_content2 .strip03 ul { }
+	#slide_content2 .strip03 ul li { float:left; margin:0px 5px 5px 0px }
+		
+	#slide_content2 .strip01 span img { width:407px; height:220px }
+	#slide_content2 .strip02 img { width:180px; height:220px }
+	#slide_content2 .strip03 ul li img { width:254px }
+}
+/*
+     FILE ARCHIVED ON 16:31:45 Mar 15, 2015 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 01:14:17 Apr 29, 2019.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  LoadShardBlock: 64.058 (3)
+  esindex: 0.009
+  captures_list: 81.501
+  CDXLines.iter: 13.003 (3)
+  PetaboxLoader3.datanode: 94.369 (4)
+  exclusion.robots: 0.18
+  exclusion.robots.policy: 0.167
+  RedisCDXSource: 1.362
+  PetaboxLoader3.resolve: 39.861
+  load_resource: 131.067
+*/
