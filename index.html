@@ -26,20 +26,21 @@
 <script type="text/javascript" src="./js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="./js/jquery.cycle.all.min.js"></script>
 <script type="text/javascript" src="./js_backend/common.js"></script>
-<!-- 구매관련 스크립트 (절대 지우지 말것!!!) -->
+<script type="text/javascript" src="./js/search_detail.js"></script>
+<script type="text/javascript" src="./js/common.js"></script>
+<!-- 구매관련 스크립트 (절대 지우지 말것!!!)
 <script type="text/javascript" src="./js_backend/mini_cart.js"></script>
 <script type="text/javascript" src="./js_backend/shopping_slide.js"></script>
 <script type="text/javascript" src="./js_backend/suggestions.js"></script>
 <script type="text/javascript" src="./js_backend/ui.js"></script>
 <script type="text/javascript" src="./js_backend/jslib.js"></script>
 <script type="text/javascript" src="./js_backend/jquery.url.packed.js"></script>
-<script type="text/javascript" src="./js/common.js"></script>
 <script type="text/javascript" src="./js/popular_searches.js"></script>
 <script type="text/javascript" src="./js/suggestions.js"></script>
 <script type="text/javascript" src="./js/NemoSlider_min.js"></script>
 <script type="text/javascript" src="./js/zoom.js"></script>
 <script type="text/javascript" src="./js/option_searches.js"></script>
-<!-- 수정 불가 --->
+구매관련 스크립트 (절대 지우지 말것!!!) -->
 
 <link href="./css/main.css" rel="stylesheet"/>
 </head>
@@ -47,216 +48,7 @@
 	<div class="accessibility">
 		<ul><li><a href="#contents">본문 바로가기</a></li></ul>
 	</div>
-	<div class="wrap">
-
-
-
-<script type="text/javascript">
-// 상세 검색 메뉴 선택
-function showDetailSearchMenu(d_cat_cd) {
-	// 탭 변경
-	$("#detail_search_menu > li").removeClass("on");
-	$("#detail_search_menu_" + d_cat_cd).addClass("on");
-
-	// 전시카테고리값 변경
-	$("#detail_search_d_cat_cd").val(d_cat_cd);
-
-	// 브랜드영역
-	$("#detail_search_brand > div").hide();
-	$("#detail_search_brand_" + d_cat_cd).show();
-
-	// 사이즈 영역
-	if(d_cat_cd == "001") {
-		$("#detail_search_size").show();
-	} else {
-		$("#detail_search_size").hide();
-	}
-
-	// 용도카테고리 영역
-	$("dl.detail_search_i_cat").hide();
-	$("#detail_search_i_cat_" + d_cat_cd).show();
-}
-
-//옵션에 겁색조건 추가
-function setSearch(type,name,value) {
-	var search_item = "";
-	var ff = document.detail_search_form;
-	var id = type + "_" + value;
-	
-
-	if(type == "search_brand") {
-		search_item = "<dl class=" + type + " id=\"" + id + "\"><dt><a href='#' onClick=\"deleteSearch('" + id + "','" + type + "'); return false;\">b</a></dt><dd><a href='#' onClick=\"deleteSearch('" + id + "','" + type + "'); return false;\">" + name + "</a></dd><input type=\"hidden\" name=\"brand[]\" value=\"" + value + "\"></dl>";
-	}
-
-	if(type == "search_size") {
-		search_item = "<dl class=" + type + " id=\"" + id + "\"><dt><a href='#' onClick=\"deleteSearch('" + id + "','" + type + "'); return false;\">s</a></dt><dd><a href='#' onClick=\"deleteSearch('" + id + "','" + type + "'); return false;\">" + name + "</a></dd><input type=\"hidden\" name=\"size[]\" value=\"" + value + "\"></dl>";
-	}
-
-	if(type == "search_price") {
-
-		var price1 = ff.price_fr.value;
-		var price2 = ff.price_to.value;
-		if(price1 == "" || price2 == "") {
-			alert("판매가를 입력해 주십시오.");
-			return false;
-		}
-
-		search_item = "<dl class=" + type + " id=\"search_price_" + value + "\"><dt><a href='#' onClick=\"deleteSearch('search_price_" + value + "'); return false;\">k</a></dt><dd><a href='#' onClick=\"deleteSearch('search_price_" + value + "'); return false;\">" + price1 + " ~ " + price2 + "</a></dd></dl>";
-
-		ff.price1.value = price1;
-		ff.price2.value = price2;
-	}
-
-	if(type == "search_gender") {
-		var checked = $("input:checkbox[name='" + id + "']").is(":checked");
-		if(checked) {
-			search_item = "<dl class=" + type + " id=\"" + id + "\"><dt><a href='#' onClick=\"deleteSearch('" + id + "','" + type + "'); return false;\">g</a></dt><dd><a href='#' onClick=\"deleteSearch('" + id + "','" + type + "'); return false;\">" + name + "</a></dd><input type=\"hidden\" name=\"sex[]\" value=\"" + value + "\"></dl>";
-		} else {
-			deleteSearch(id, type);
-		}
-	}
-
-	if(type == "search_color") {
-		search_item = "<dl class=" + type + " id=\"" + id + "\"><dt><a href='#' onClick=\"deleteSearch('" + id + "','" + type + "'); return false;\">c</a></dt><dd><a href='#' onClick=\"deleteSearch('" + id + "','" + type + "'); return false;\">" + name + "</a></dd><input type=\"hidden\" name=\"color[]\" value=\"" + value + "\"></dl>";
-	}
-
-	if(type == "search_item") {
-		var checked = $("input:checkbox[name='" + id + "']").is(":checked");
-		if(checked) {
-			search_item = "<dl class=" + type + " id=\"" + id + "\"><dt><a href='#' onClick=\"deleteSearch('" + id + "','" + type + "'); return false;\">f</a></dt><dd><a href='#' onClick=\"deleteSearch('" + id + "','" + type + "'); return false;\">" + name + "</a></dd><input type=\"hidden\" name=\"item_cat_cd[]\" value=\"" + value + "\"></dl>";
-		} else {
-			deleteSearch(id, type);
-		}
-	}
-
-	if(type == "search_keyword") {
-		var keyword = ff.keyword.value;
-
-		var keyword_values = $("input[name='" + type + "'][type='hidden']");
-		var num = keyword_values.length;
-
-		search_item = "<dl class=" + type + " id=\"search_keyword_" + num + "\"><dt><a href='#' onClick=\"deleteSearch('search_keyword_" + num + "','" + type + "'); return false;\">k</a></dt><dd><a href='#' onClick=\"deleteSearch('search_keyword_" + num + "','" + type + "'); return false;\">" + keyword + "</a></dd><input type=\"hidden\" name=\"" + type + "\" value=\"" + keyword + "\"></dl>";
-	}
-
-	if($('#search_values #' + type + '_' + value).length > 0) {
-		alert("추가된 검색조건 입니다.");
-		return false;
-	}
-
-	document.getElementById('search_values').innerHTML += search_item;
-
-	setSearchValue(type);
-}
-
-function setSearchValue(type) {
-	var search_values = $("input[name='"+type+"'][type='hidden']");
-
-	var value = "";
-	for(var i=0; i<search_values.length; i++) {
-		if(i == 0) {
-			value = $(search_values[i]).attr("value");
-		} else {
-			value += " " + $(search_values[i]).attr("value");
-		}
-	}
-
-	var ff = document.detail_search_form;
-
-	if(type == "search_keyword") {
-		ff.q.value = "";
-		ff.q.value = value;
-	}
-}
-
-function resetSearch() {
-	document.detail_search_form.reset();
-	$('.search_brand').remove();
-	$('.search_size').remove();
-	$('.search_color').remove();
-	$('.search_price').remove();
-	$('.search_gender').remove();
-	$('.search_item').remove();
-	$('.search_keyword').remove();
-}
-
-function deleteSearch(id,type) {
-
-	$('#'+id).remove();
-	
-	//옵션 삭제 시 checkbox 검색조건에 대하여 unchecked
-	if(type == "search_gender" ||type == "search_item") {
-		$("input:checkbox[name='" + id + "']").attr("checked", false);
-	}
-
-	setSearchValue(type);
-}
-
-function sendSearch() {
-
-	var ff = document.detail_search_form;
-
-	if($("#search_values").html() == "") {
-		alert("검색 조건을 최소한 1개 이상 선택해 주세요.");
-		return false;
-	}
-
-	/*
-	if(ff.q.value == "") {
-		alert("검색어를 입력해 주세요.");
-		ff.keyword.focus();
-		return false;
-	}
-	*/
-
-	ff.submit();
-}
-
-
-var best_kwd_idx = 0;
-var best_kwd_timer = null;
-function bestKeywordRoll()
-{
-	var kwd_obj = $("#roll_keyword_inner > li");
-
-	var kwd = kwd_obj.eq(best_kwd_idx).html();
-	$("#q").val(kwd);
-
-	if(best_kwd_idx >= kwd_obj.length-1){
-		best_kwd_idx = 0;
-	} else {
-		best_kwd_idx++;
-	}
-	
-}
-
-$(window).load(function() {
-	best_kwd_timer = setInterval(bestKeywordRoll, 2500);
-
-	$("#q").bind({
-		'focus': function(){
-			clearInterval(best_kwd_timer);
-			$("#q").val('');
-		},
-		'blur': function(){
-			best_kwd_timer = setInterval(bestKeywordRoll, 2500);
-		}
-	});
-
-	// 상단 상세검색 가격 슬라이드
-	$("#top-slider-range").slider({
-		range: true,
-		min: 0,
-		max: 1000000,
-		values: [ 0, 0],
-		slide: function( event, ui ) {
-			$("#top_price_fr").val(ui.values[0]);
-			$("#top_price_to").val(ui.values[1]);
-		}
-	});
-});
-</script>
-
-	
+	<div class="wrap">	
 		<header>
 			<div class="tnb">
 				<div class="tnbWrap">
@@ -663,406 +455,406 @@ $(window).load(function() {
 										<div id="detail_search_brand_001" class="scroll_brand shoes"> <!-- 신발 브랜드리스트 -->
 											<div class="brandInner">
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','나이키','nike'); return false;" style="background:url(./img/search/brand/shoes/s_006.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','나이키','nike'); return false;" style="background:url(./img/s_006.jpg) no-repeat; background-position:left center">
 														<div><span>나이키</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','뉴발란스','newbalance'); return false;" style="background:url(./img/search/brand/shoes/s_010.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','뉴발란스','newbalance'); return false;" style="background:url(./img/s_010.jpg) no-repeat; background-position:left center">
 														<div><span>뉴발란스</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','푸마','puma'); return false;" style="background:url(./img/search/brand/shoes/s_065.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','푸마','puma'); return false;" style="background:url(./img/s_065.jpg) no-repeat; background-position:left center">
 														<div><span>푸마</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','반스','vans'); return false;" style="background:url(./img/search/brand/shoes/s_024.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','반스','vans'); return false;" style="background:url(./img/s_024.jpg) no-repeat; background-position:left center">
 														<div><span>반스</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','아디다스','adidas'); return false;" style="background:url(./img/search/brand/shoes/s_039.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','아디다스','adidas'); return false;" style="background:url(./img/s_039.jpg) no-repeat; background-position:left center">
 														<div><span>아디다스</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','오니츠카 타이거','onitsukatiger'); return false;" style="background:url(./img/search/brand/shoes/s_047.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','오니츠카 타이거','onitsukatiger'); return false;" style="background:url(./img/s_047.jpg) no-repeat; background-position:left center">
 														<div><span>오니츠카 타이거</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','리복','reebok'); return false;" style="background:url(./img/search/brand/shoes/s_020.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','리복','reebok'); return false;" style="background:url(./img/s_020.jpg) no-repeat; background-position:left center">
 														<div><span>리복</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','써코니','saucony'); return false;" style="background:url(./img/search/brand/shoes/s_037.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','써코니','saucony'); return false;" style="background:url(./img/s_037.jpg) no-repeat; background-position:left center">
 														<div><span>써코니</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','케즈','keds'); return false;" style="background:url(./img/search/brand/shoes/s_081.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','케즈','keds'); return false;" style="background:url(./img/s_081.jpg) no-repeat; background-position:left center">
 														<div><span>케즈</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','잭퍼셀','conversejackpurcell'); return false;" style="background:url(./img/search/brand/shoes/s_072.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','잭퍼셀','conversejackpurcell'); return false;" style="background:url(./img/s_072.jpg) no-repeat; background-position:left center">
 														<div><span>컨버스 잭퍼셀</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','컨버스 존바바토스','conversjohnvarvatos'); return false;" style="background:url(./img/search/brand/shoes/s_054.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','컨버스 존바바토스','conversjohnvarvatos'); return false;" style="background:url(./img/s_054.jpg) no-repeat; background-position:left center">
 														<div><span>컨버스 존바바토스</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','블루마운틴','bluemountain'); return false;" style="background:url(./img/search/brand/shoes/s_029.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','블루마운틴','bluemountain'); return false;" style="background:url(./img/s_029.jpg) no-repeat; background-position:left center">
 														<div><span>블루마운틴</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','버켄스탁','birkenstock'); return false;" style="background:url(./img/search/brand/shoes/s_025.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','버켄스탁','birkenstock'); return false;" style="background:url(./img/s_025.jpg) no-repeat; background-position:left center">
 														<div><span>버켄스탁</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','락포트','rockport'); return false;" style="background:url(./img/search/brand/shoes/s_017.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','락포트','rockport'); return false;" style="background:url(./img/s_017.jpg) no-repeat; background-position:left center">
 														<div><span>락포트</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','바스','bass'); return false;" style="background:url(./img/search/brand/shoes/s_023.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','바스','bass'); return false;" style="background:url(./img/s_023.jpg) no-repeat; background-position:left center">
 														<div><span>바스</span></div>
 													</a>
 												</div>	
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','닥터마틴','drmartens'); return false;" style="background:url(./img/search/brand/shoes/s_011.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','닥터마틴','drmartens'); return false;" style="background:url(./img/s_011.jpg) no-repeat; background-position:left center">
 														<div><span>닥터마틴</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','팀버랜드','timberland'); return false;" style="background:url(./img/search/brand/shoes/s_059.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','팀버랜드','timberland'); return false;" style="background:url(./img/s_059.jpg) no-repeat; background-position:left center">
 														<div><span>팀버랜드</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','돔바','domba'); return false;" style="background:url(./img/search/brand/shoes/s_014.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','돔바','domba'); return false;" style="background:url(./img/s_014.jpg) no-repeat; background-position:left center">
 														<div><span>돔바</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','쏘로굿','thorogood'); return false;" style="background:url(./img/search/brand/shoes/s_038.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','쏘로굿','thorogood'); return false;" style="background:url(./img/s_038.jpg) no-repeat; background-position:left center">
 														<div><span>쏘로굿</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','대너','danner'); return false;" style="background:url(./img/search/brand/shoes/s_012.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','대너','danner'); return false;" style="background:url(./img/s_012.jpg) no-repeat; background-position:left center">
 														<div><span>대너</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','클락스','clarks'); return false;" style="background:url(./img/search/brand/shoes/s_056.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','클락스','clarks'); return false;" style="background:url(./img/s_056.jpg) no-repeat; background-position:left center">
 														<div><span>클락스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','탐스','toms'); return false;" style="background:url(./img/search/brand/shoes/s_057.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','탐스','toms'); return false;" style="background:url(./img/s_057.jpg) no-repeat; background-position:left center">
 														<div><span>탐스</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','크록스','crocs'); return false;" style="background:url(./img/search/brand/shoes/s_055.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','크록스','crocs'); return false;" style="background:url(./img/s_055.jpg) no-repeat; background-position:left center">
 														<div><span>크록스</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','스페리','sperry'); return false;" style="background:url(./img/search/brand/shoes/s_036.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','스페리','sperry'); return false;" style="background:url(./img/s_036.jpg) no-repeat; background-position:left center">
 														<div><span>스페리</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','수페르가','superga'); return false;" style="background:url(./img/search/brand/shoes/s_031.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','수페르가','superga'); return false;" style="background:url(./img/s_031.jpg) no-repeat; background-position:left center">
 														<div><span>수페르가</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','벤시몽','bensimon'); return false;" style="background:url(./img/search/brand/shoes/s_071.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','벤시몽','bensimon'); return false;" style="background:url(./img/s_071.jpg) no-repeat; background-position:left center">
 														<div><span>벤시몽</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','노스페이스','northface'); return false;" style="background:url(./img/search/brand/clothes/c_003.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','노스페이스','northface'); return false;" style="background:url(./img/c_003.jpg) no-repeat; background-position:left center">
 														<div><span>노스페이스</span></div>	
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','소렐','sorel'); return false;" style="background:url(./img/search/brand/shoes/s_030.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','소렐','sorel'); return false;" style="background:url(./img/s_030.jpg) no-repeat; background-position:left center">
 														<div><span>소렐</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','베어파우','bearpaw'); return false;" style="background:url(./img/search/brand/shoes/s_026.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','베어파우','bearpaw'); return false;" style="background:url(./img/s_026.jpg) no-repeat; background-position:left center">
 														<div><span>베어파우</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','보그스','bogs'); return false;" style="background:url(./img/search/brand/shoes/s_027.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','보그스','bogs'); return false;" style="background:url(./img/s_027.jpg) no-repeat; background-position:left center">
 														<div><span>보그스</span></div>
 													</a>
 												</div>
 
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','치페와','chippewa'); return false;" style="background:url(./img/search/brand/shoes/s_075.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','치페와','chippewa'); return false;" style="background:url(./img/s_075.jpg) no-repeat; background-position:left center">
 														<div><span>치페와</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','디젤','diesel'); return false;" style="background:url(./img/search/brand/shoes/s_076.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','디젤','diesel'); return false;" style="background:url(./img/s_076.jpg) no-repeat; background-position:left center">
 														<div><span>디젤</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','월시','walsh'); return false;" style="background:url(./img/search/brand/shoes/s_077.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','월시','walsh'); return false;" style="background:url(./img/s_077.jpg) no-repeat; background-position:left center">
 														<div><span>월시</span></div>
 													</a>
 												</div>
 
 
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','핏플랍','fitflop'); return false;" style="background:url(./img/search/brand/shoes/s_068.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','핏플랍','fitflop'); return false;" style="background:url(./img/s_068.jpg) no-repeat; background-position:left center">
 														<div><span>핏플랍</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','제네릭 서플러스','genericsurplus'); return false;" style="background:url(./img/search/brand/shoes/s_052.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','제네릭 서플러스','genericsurplus'); return false;" style="background:url(./img/s_052.jpg) no-repeat; background-position:left center">
 														<div><span>제네릭 서플러스</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','PF플라이어스','pfflyers'); return false;" style="background:url(./img/search/brand/shoes/s_067.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','PF플라이어스','pfflyers'); return false;" style="background:url(./img/s_067.jpg) no-repeat; background-position:left center">
 														<div><span>PF플라이어스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','가데','gadae'); return false;" style="background:url(./img/search/brand/shoes/s_001.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','가데','gadae'); return false;" style="background:url(./img/s_001.jpg) no-repeat; background-position:left center">
 														<div><span>가데</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','고메','gourmet'); return false;" style="background:url(./img/search/brand/shoes/s_002.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','고메','gourmet'); return false;" style="background:url(./img/s_002.jpg) no-repeat; background-position:left center">
 														<div><span>고메</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','그레고','grego'); return false;" style="background:url(./img/search/brand/shoes/s_003.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','그레고','grego'); return false;" style="background:url(./img/s_003.jpg) no-repeat; background-position:left center">
 														<div><span>그레고</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','글로벌야드','globalyard'); return false;" style="background:url(./img/search/brand/shoes/s_004.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','글로벌야드','globalyard'); return false;" style="background:url(./img/s_004.jpg) no-repeat; background-position:left center">
 														<div><span>글로벌야드</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','깔창','insole'); return false;" style="background:url(./img/search/brand/shoes/s_005.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','깔창','insole'); return false;" style="background:url(./img/s_005.jpg) no-repeat; background-position:left center">
 														<div><span>깔창</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','내츄럴월드','naturalworld'); return false;" style="background:url(./img/search/brand/shoes/s_007.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','내츄럴월드','naturalworld'); return false;" style="background:url(./img/s_007.jpg) no-repeat; background-position:left center">
 														<div><span>내츄럴월드</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','네이티브','native'); return false;" style="background:url(./img/search/brand/shoes/s_008.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','네이티브','native'); return false;" style="background:url(./img/s_008.jpg) no-repeat; background-position:left center">
 														<div><span>네이티브</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','노스덕','northduck'); return false;" style="background:url(./img/search/brand/shoes/s_009.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','노스덕','northduck'); return false;" style="background:url(./img/s_009.jpg) no-repeat; background-position:left center">
 														<div><span>노스덕</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','덤퍼','dumper'); return false;" style="background:url(./img/search/brand/shoes/s_013.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','덤퍼','dumper'); return false;" style="background:url(./img/s_013.jpg) no-repeat; background-position:left center">
 														<div><span>덤퍼</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','디씨','dc'); return false;" style="background:url(./img/search/brand/shoes/s_015.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','디씨','dc'); return false;" style="background:url(./img/s_015.jpg) no-repeat; background-position:left center">
 														<div><span>디씨</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','라코스테','lacoste'); return false;" style="background:url(./img/search/brand/shoes/s_016.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','라코스테','lacoste'); return false;" style="background:url(./img/s_016.jpg) no-repeat; background-position:left center">
 														<div><span>라코스테</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','러그즈','lugz'); return false;" style="background:url(./img/search/brand/shoes/s_018.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','러그즈','lugz'); return false;" style="background:url(./img/s_018.jpg) no-repeat; background-position:left center">
 														<div><span>러그즈</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','럼버잭','lumberjack'); return false;" style="background:url(./img/search/brand/shoes/s_019.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','럼버잭','lumberjack'); return false;" style="background:url(./img/s_019.jpg) no-repeat; background-position:left center">
 														<div><span>럼버잭</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','무다','mooda'); return false;" style="background:url(./img/search/brand/shoes/s_021.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','무다','mooda'); return false;" style="background:url(./img/s_021.jpg) no-repeat; background-position:left center">
 														<div><span>무다</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','미즈노','mizuno'); return false;" style="background:url(./img/search/brand/shoes/s_022.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','미즈노','mizuno'); return false;" style="background:url(./img/s_022.jpg) no-repeat; background-position:left center">
 														<div><span>미즈노</span></div>
 													</a>
 												</div>											
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','보트아일랜드','boatisland'); return false;" style="background:url(./img/search/brand/shoes/s_028.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','보트아일랜드','boatisland'); return false;" style="background:url(./img/s_028.jpg) no-repeat; background-position:left center">
 														<div><span>보트아일랜드</span></div>
 													</a>
 												</div>
 
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','스노우바이슨','snowbison'); return false;" style="background:url(./img/search/brand/shoes/s_032.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','스노우바이슨','snowbison'); return false;" style="background:url(./img/s_032.jpg) no-repeat; background-position:left center">
 														<div><span>스노우바이슨</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','스베누','sbenu'); return false;" style="background:url(./img/search/brand/shoes/s_033.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','스베누','sbenu'); return false;" style="background:url(./img/s_033.jpg) no-repeat; background-position:left center">
 														<div><span>스베누</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','스케쳐스','skechers'); return false;" style="background:url(./img/search/brand/shoes/s_034.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','스케쳐스','skechers'); return false;" style="background:url(./img/s_034.jpg) no-repeat; background-position:left center">
 														<div><span>스케쳐스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','스파르투스','spartvs'); return false;" style="background:url(./img/search/brand/shoes/s_035.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','스파르투스','spartvs'); return false;" style="background:url(./img/s_035.jpg) no-repeat; background-position:left center">
 														<div><span>스파르투스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','아디다스 퍼포먼스','adidasPerformance'); return false;" style="background:url(./img/search/brand/shoes/s_040.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','아디다스 퍼포먼스','adidasPerformance'); return false;" style="background:url(./img/s_040.jpg) no-repeat; background-position:left center">
 														<div><span>아디다스 퍼포먼스</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','푸마퍼포먼스','pumaperformance'); return false;" style="background:url(./img/search/brand/shoes/s_074.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','푸마퍼포먼스','pumaperformance'); return false;" style="background:url(./img/s_074.jpg) no-repeat; background-position:left center">
 														<div><span>푸마퍼포먼스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','아키','akiii'); return false;" style="background:url(./img/search/brand/shoes/s_041.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','아키','akiii'); return false;" style="background:url(./img/s_041.jpg) no-repeat; background-position:left center">
 														<div><span>아키</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','언코리','encoree'); return false;" style="background:url(./img/search/brand/shoes/s_042.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','언코리','encoree'); return false;" style="background:url(./img/s_042.jpg) no-repeat; background-position:left center">
 														<div><span>언코리</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','에고스노우','egosnow'); return false;" style="background:url(./img/search/brand/shoes/s_043.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','에고스노우','egosnow'); return false;" style="background:url(./img/s_043.jpg) no-repeat; background-position:left center">
 														<div><span>에고스노우</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','SNRD','snrd'); return false;" style="background:url(./img/search/brand/shoes/s_044.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','SNRD','snrd'); return false;" style="background:url(./img/s_044.jpg) no-repeat; background-position:left center">
 														<div><span>SNRD</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','SNRD키즈','snrdkids'); return false;" style="background:url(./img/search/brand/shoes/s_045.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','SNRD키즈','snrdkids'); return false;" style="background:url(./img/s_045.jpg) no-repeat; background-position:left center">
 														<div><span>SNRD키즈</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','에트니스','etnies'); return false;" style="background:url(./img/search/brand/shoes/s_046.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','에트니스','etnies'); return false;" style="background:url(./img/s_046.jpg) no-repeat; background-position:left center">
 														<div><span>애트니스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','OHO 파셔','ohoposher'); return false;" style="background:url(./img/search/brand/shoes/s_048.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','OHO 파셔','ohoposher'); return false;" style="background:url(./img/s_048.jpg) no-repeat; background-position:left center">
 														<div><span>OHO 파셔</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','이누이트','innuit'); return false;" style="background:url(./img/search/brand/shoes/s_049.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','이누이트','innuit'); return false;" style="background:url(./img/s_049.jpg) no-repeat; background-position:left center">
 														<div><span>이누이트</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','이메리카','emerica'); return false;" style="background:url(./img/search/brand/shoes/s_050.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','이메리카','emerica'); return false;" style="background:url(./img/s_050.jpg) no-repeat; background-position:left center">
 														<div><span>이메리카</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','이에스','es'); return false;" style="background:url(./img/search/brand/shoes/s_051.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','이에스','es'); return false;" style="background:url(./img/s_051.jpg) no-repeat; background-position:left center">
 														<div><span>이에스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','컨버스','converse'); return false;" style="background:url(./img/search/brand/shoes/s_053.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','컨버스','converse'); return false;" style="background:url(./img/s_053.jpg) no-repeat; background-position:left center">
 														<div><span>컨버스</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','TUK','tuk'); return false;" style="background:url(./img/search/brand/shoes/s_058.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','TUK','tuk'); return false;" style="background:url(./img/s_058.jpg) no-repeat; background-position:left center">
 														<div><span>TUK</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','팬콧','pancoat'); return false;" style="background:url(./img/search/brand/shoes/s_060.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','팬콧','pancoat'); return false;" style="background:url(./img/s_060.jpg) no-repeat; background-position:left center">
 														<div><span>팬콧</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','페이퍼플레인','paperplanes'); return false;" style="background:url(./img/search/brand/shoes/s_061.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','페이퍼플레인','paperplanes'); return false;" style="background:url(./img/s_061.jpg) no-repeat; background-position:left center">
 														<div><span>페이퍼플레인</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','페이퍼플레인 키즈','paperplaneskids'); return false;" style="background:url(./img/search/brand/shoes/s_062.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','페이퍼플레인 키즈','paperplaneskids'); return false;" style="background:url(./img/s_062.jpg) no-repeat; background-position:left center">
 														<div><span>페이퍼플레인 키즈</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','펭귄','penguin'); return false;" style="background:url(./img/search/brand/shoes/s_063.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','펭귄','penguin'); return false;" style="background:url(./img/s_063.jpg) no-repeat; background-position:left center">
 														<div><span>펭귄</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','포인터','pointer'); return false;" style="background:url(./img/search/brand/shoes/s_064.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','포인터','pointer'); return false;" style="background:url(./img/s_064.jpg) no-repeat; background-position:left center">
 														<div><span>포인터</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','프레드페리','fredperry'); return false;" style="background:url(./img/search/brand/shoes/s_066.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','프레드페리','fredperry'); return false;" style="background:url(./img/s_066.jpg) no-repeat; background-position:left center">
 														<div><span>프레드페리</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','하바이아나스','havaianas'); return false;" style="background:url(./img/search/brand/shoes/s_069.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','하바이아나스','havaianas'); return false;" style="background:url(./img/s_069.jpg) no-repeat; background-position:left center">
 														<div><span>하바이아나스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','피렌체아뜨리에','firenzeatelier'); return false;" style="background:url(./img/search/brand/acc/a_067.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','피렌체아뜨리에','firenzeatelier'); return false;" style="background:url(./img/a_067.jpg) no-repeat; background-position:left center">
 														<div><span>피렌체아뜨리에</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','빅토리아','victoria'); return false;" style="background:url(./img/search/brand/shoes/s_078.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','빅토리아','victoria'); return false;" style="background:url(./img/s_078.jpg) no-repeat; background-position:left center">
 														<div><span>빅토리아</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','잭울프스킨','jackwolfskin'); return false;" style="background:url(./img/search/brand/shoes/s_080.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','잭울프스킨','jackwolfskin'); return false;" style="background:url(./img/s_080.jpg) no-repeat; background-position:left center">
 														<div><span>잭울프스킨</span></div>
 													</a>
 												</div>
@@ -1072,277 +864,277 @@ $(window).load(function() {
 										<div id="detail_search_brand_002" class="scroll_brand clothes" style="display:none"> <!-- 의류 브랜드리스트 -->
 											<div class="brandInner">
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','나이키','nike'); return false;" style="background:url(./img/search/brand/clothes/c_002.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','나이키','nike'); return false;" style="background:url(./img/c_002.jpg) no-repeat; background-position:left center">
 														<div><span>나이키</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','스투시','stussy'); return false;" style="background:url(./img/search/brand/clothes/c_020.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','스투시','stussy'); return false;" style="background:url(./img/c_020.jpg) no-repeat; background-position:left center">
 														<div><span>스투시</span></div>
 													</a>
 												</div>
  												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','허프','huf'); return false;" style="background:url(./img/search/brand/clothes/c_052.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','허프','huf'); return false;" style="background:url(./img/c_052.jpg) no-repeat; background-position:left center">
 														<div><span>허프</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','오베이','obey'); return false;" style="background:url(./img/search/brand/clothes/c_031.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','오베이','obey'); return false;" style="background:url(./img/c_031.jpg) no-repeat; background-position:left center">
 														<div><span>오베이</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','도프','dope'); return false;" style="background:url(./img/search/brand/clothes/c_006.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','도프','dope'); return false;" style="background:url(./img/c_006.jpg) no-repeat; background-position:left center">
 														<div><span>도프</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','SSUR','ssur'); return false;" style="background:url(./img/search/brand/clothes/c_025.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','SSUR','ssur'); return false;" style="background:url(./img/c_025.jpg) no-repeat; background-position:left center">
 														<div><span>SSUR</span></div>
 													</a>
 												</div>	
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','스테이플','staple'); return false;" style="background:url(./img/search/brand/clothes/c_019.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','스테이플','staple'); return false;" style="background:url(./img/c_019.jpg) no-repeat; background-position:left center">
 														<div><span>스테이플</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','40oz NYC','40oznyc'); return false;" style="background:url(./img/search/brand/clothes/c_048.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','40oz NYC','40oznyc'); return false;" style="background:url(./img/c_048.jpg) no-repeat; background-position:left center">
 														<div><span>40oz NYC</span></div>
 													</a>
 												</div>																								
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','오드퓨쳐','oddfuture'); return false;" style="background:url(./img/search/brand/clothes/c_030.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','오드퓨쳐','oddfuture'); return false;" style="background:url(./img/c_030.jpg) no-repeat; background-position:left center">
 														<div><span>오드퓨쳐</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','알파인더스트리','alphaindustries'); return false;" style="background:url(./img/search/brand/clothes/c_023.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','알파인더스트리','alphaindustries'); return false;" style="background:url(./img/c_023.jpg) no-repeat; background-position:left center">
 														<div><span>알파인더스트리</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','트래셔','thrasher'); return false;" style="background:url(./img/search/brand/clothes/c_053.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','트래셔','thrasher'); return false;" style="background:url(./img/c_053.jpg) no-repeat; background-position:left center">
 														<div><span>트래셔</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','비젼스트릿웨어','visionstreetwear'); return false;" style="background:url(./img/search/brand/clothes/c_054.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','비젼스트릿웨어','visionstreetwear'); return false;" style="background:url(./img/c_054.jpg) no-repeat; background-position:left center">
 														<div><span>비젼스트릿웨어</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','트리플에이','aaa'); return false;" style="background:url(./img/search/brand/clothes/c_042.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','트리플에이','aaa'); return false;" style="background:url(./img/c_042.jpg) no-repeat; background-position:left center">
 														<div><span>트리플에이</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','챔피온','champion'); return false;" style="background:url(./img/search/brand/clothes/c_036.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','챔피온','champion'); return false;" style="background:url(./img/c_036.jpg) no-repeat; background-position:left center">
 														<div><span>챔피온</span></div>
 													</a>
 												</div>																								
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','다소울','dasoul'); return false;" style="background:url(./img/search/brand/clothes/c_005.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','다소울','dasoul'); return false;" style="background:url(./img/c_005.jpg) no-repeat; background-position:left center">
 														<div><span>다소울</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','엠엘비','MLB'); return false;" style="background:url(./img/search/brand/clothes/c_029.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','엠엘비','MLB'); return false;" style="background:url(./img/c_029.jpg) no-repeat; background-position:left center">
 														<div><span>엠엘비</span></div>
 													</a>
 												</div>																								
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','스놉','snob'); return false;" style="background:url(./img/search/brand/clothes/c_016.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','스놉','snob'); return false;" style="background:url(./img/c_016.jpg) no-repeat; background-position:left center">
 														<div><span>스놉</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','테이블클로징','tableclothingco'); return false;" style="background:url(./img/search/brand/clothes/c_039.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','테이블클로징','tableclothingco'); return false;" style="background:url(./img/c_039.jpg) no-repeat; background-position:left center">
 														<div><span>테이블클로징</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','레페스트','refest'); return false;" style="background:url(./img/search/brand/clothes/c_009.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','레페스트','refest'); return false;" style="background:url(./img/c_009.jpg) no-repeat; background-position:left center">
 														<div><span>레페스트</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','레벨에잇','rebel8'); return false;" style="background:url(./img/search/brand/clothes/c_057.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','레벨에잇','rebel8'); return false;" style="background:url(./img/c_057.jpg) no-repeat; background-position:left center">
 														<div><span>레벨에잇</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','바알','baal'); return false;" style="background:url(./img/search/brand/clothes/c_012.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','바알','baal'); return false;" style="background:url(./img/c_012.jpg) no-repeat; background-position:left center">
 														<div><span>바알</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','리즌','reason'); return false;" style="background:url(./img/search/brand/clothes/c_011.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','리즌','reason'); return false;" style="background:url(./img/c_011.jpg) no-repeat; background-position:left center">
 														<div><span>리즌</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','트웰라이브','twlv'); return false;" style="background:url(./img/search/brand/clothes/c_043.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','트웰라이브','twlv'); return false;" style="background:url(./img/c_043.jpg) no-repeat; background-position:left center">
 														<div><span>트웰라이브</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','월드페이머스','wfdw'); return false;" style="background:url(./img/search/brand/clothes/c_033.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','월드페이머스','wfdw'); return false;" style="background:url(./img/c_033.jpg) no-repeat; background-position:left center">
 														<div><span>월드페이머스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','알슨','arson'); return false;" style="background:url(./img/search/brand/clothes/c_022.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','알슨','arson'); return false;" style="background:url(./img/c_022.jpg) no-repeat; background-position:left center">
 														<div><span>알슨</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','펠틱스','feltics'); return false;" style="background:url(./img/search/brand/clothes/c_047.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','펠틱스','feltics'); return false;" style="background:url(./img/c_047.jpg) no-repeat; background-position:left center">
 														<div><span>펠틱스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','팬콧','pancoat'); return false;" style="background:url(./img/search/brand/clothes/c_044.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','팬콧','pancoat'); return false;" style="background:url(./img/c_044.jpg) no-repeat; background-position:left center">
 														<div><span>팬콧</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','팬콧스웨그','pancoatswag'); return false;" style="background:url(./img/search/brand/clothes/c_045.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','팬콧스웨그','pancoatswag'); return false;" style="background:url(./img/c_045.jpg) no-repeat; background-position:left center">
 														<div><span>팬콧스웨그</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','루즈라이더스','loosriders'); return false;" style="background:url(./img/search/brand/clothes/c_010.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','루즈라이더스','loosriders'); return false;" style="background:url(./img/c_010.jpg) no-repeat; background-position:left center">
 														<div><span>루즈라이더스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','블러브드 서플라이','blvdsupply'); return false;" style="background:url(./img/search/brand/clothes/c_013.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','블러브드 서플라이','blvdsupply'); return false;" style="background:url(./img/c_013.jpg) no-repeat; background-position:left center">
 														<div><span>블러브드 서플라이</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','하이프','hype'); return false;" style="background:url(./img/search/brand/clothes/c_050.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','하이프','hype'); return false;" style="background:url(./img/c_050.jpg) no-repeat; background-position:left center">
 														<div><span>하이프</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','토크레스','talkless'); return false;" style="background:url(./img/search/brand/clothes/c_040.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','토크레스','talkless'); return false;" style="background:url(./img/c_040.jpg) no-repeat; background-position:left center">
 														<div><span>토크레스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','웨스트코스트챠퍼스','westcoastchoppers'); return false;" style="background:url(./img/search/brand/clothes/c_034.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','웨스트코스트챠퍼스','westcoastchoppers'); return false;" style="background:url(./img/c_034.jpg) no-repeat; background-position:left center">
 														<div><span>웨스트코스트챠퍼스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','트루블러드','trueblood'); return false;" style="background:url(./img/search/brand/clothes/c_041.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','트루블러드','trueblood'); return false;" style="background:url(./img/c_041.jpg) no-repeat; background-position:left center">
 														<div><span>트루블러드</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','다소울','dasoul'); return false;" style="background:url(./img/search/brand/clothes/c_005.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','다소울','dasoul'); return false;" style="background:url(./img/c_005.jpg) no-repeat; background-position:left center">
 														<div><span>다소울</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','스마일피그','smilepig'); return false;" style="background:url(./img/search/brand/clothes/c_017.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','스마일피그','smilepig'); return false;" style="background:url(./img/c_017.jpg) no-repeat; background-position:left center">
 														<div><span>스마일피그</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','수어사이덜 텐던시스','suicidaltendencies'); return false;" style="background:url(./img/search/brand/clothes/c_015.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','수어사이덜 텐던시스','suicidaltendencies'); return false;" style="background:url(./img/c_015.jpg) no-repeat; background-position:left center">
 														<div><span>수어사이덜 텐던시스</span></div>
 													</a>
 												</div>	
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','빌리에잇','billy8'); return false;" style="background:url(./img/search/brand/clothes/c_014.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','빌리에잇','billy8'); return false;" style="background:url(./img/c_014.jpg) no-repeat; background-position:left center">
 														<div><span>빌리에잇</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','노스페이스','northface'); return false;" style="background:url(./img/search/brand/clothes/c_003.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','노스페이스','northface'); return false;" style="background:url(./img/c_003.jpg) no-repeat; background-position:left center">
 														<div><span>노스페이스</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','페니','penny'); return false;" style="background:url(./img/search/brand/clothes/c_046.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','페니','penny'); return false;" style="background:url(./img/c_046.jpg) no-repeat; background-position:left center">
 														<div><span>페니</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','디씬','discene'); return false;" style="background:url(./img/search/brand/clothes/c_007.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','디씬','discene'); return false;" style="background:url(./img/c_007.jpg) no-repeat; background-position:left center">
 														<div><span>디씬</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','하파데이','hafaadai'); return false;" style="background:url(./img/search/brand/clothes/c_051.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','하파데이','hafaadai'); return false;" style="background:url(./img/c_051.jpg) no-repeat; background-position:left center">
 														<div><span>하파데이</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','에잇볼륨','eightvolume'); return false;" style="background:url(./img/search/brand/clothes/c_026.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','에잇볼륨','eightvolume'); return false;" style="background:url(./img/c_026.jpg) no-repeat; background-position:left center">
 														<div><span>에잇볼륨</span></div>
 													</a>
 												</div>	
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','카나비','canavy'); return false;" style="background:url(./img/search/brand/clothes/c_038.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','카나비','canavy'); return false;" style="background:url(./img/c_038.jpg) no-repeat; background-position:left center">
 														<div><span>카나비</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','스케쳐스','skechers'); return false;" style="background:url(./img/search/brand/clothes/c_018.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','스케쳐스','skechers'); return false;" style="background:url(./img/c_018.jpg) no-repeat; background-position:left center">
 														<div><span>스케쳐스</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','에트니스','etnies'); return false;" style="background:url(./img/search/brand/clothes/c_027.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','에트니스','etnies'); return false;" style="background:url(./img/c_027.jpg) no-repeat; background-position:left center">
 														<div><span>에트니스</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','인세인지니어스','insanegenius'); return false;" style="background:url(./img/search/brand/acc/a_041.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','인세인지니어스','insanegenius'); return false;" style="background:url(./img/a_041.jpg) no-repeat; background-position:left center">
 														<div><span>인세인지니어스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','인세인지니어스','insanegenius'); return false;" style="background:url(./img/search/brand/shoes/s_043.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','인세인지니어스','insanegenius'); return false;" style="background:url(./img/s_043.jpg) no-repeat; background-position:left center">
 														<div><span>에고스노우</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','이메리카','emerica'); return false;" style="background:url(./img/search/brand/clothes/c_035.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','이메리카','emerica'); return false;" style="background:url(./img/c_035.jpg) no-repeat; background-position:left center">
 														<div><span>이메리카</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','아디다스 퍼포먼스','adidasPerformance'); return false;" style="background:url(./img/search/brand/clothes/c_021.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','아디다스 퍼포먼스','adidasPerformance'); return false;" style="background:url(./img/c_021.jpg) no-repeat; background-position:left center">
 														<div><span>아디다스 퍼포먼스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','푸마','puma'); return false;" style="background:url(./img/search/brand/clothes/c_049.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','푸마','puma'); return false;" style="background:url(./img/c_049.jpg) no-repeat; background-position:left center">
 														<div><span>푸마</span></div>
 													</a>
 												</div>		
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','캐빈클라인','ck'); return false;" style="background:url(./img/search/brand/acc/a_045.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','캐빈클라인','ck'); return false;" style="background:url(./img/a_045.jpg) no-repeat; background-position:left center">
 														<div><span>캐빈클라인</span></div>
 													</a>
 												</div>													
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','애틱','attic'); return false;" style="background:url(./img/search/brand/clothes/c_024.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','애틱','attic'); return false;" style="background:url(./img/c_024.jpg) no-repeat; background-position:left center">
 														<div><span>애틱</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','뉴해빗','nuhabit'); return false;" style="background:url(./img/search/brand/clothes/c_056.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','뉴해빗','nuhabit'); return false;" style="background:url(./img/c_056.jpg) no-repeat; background-position:left center">
 														<div><span>뉴해빗</span></div>
 													</a>
 												</div>												
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','프리미티브','primitive'); return false;" style="background:url(./img/search/brand/clothes/c_058.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','프리미티브','primitive'); return false;" style="background:url(./img/c_058.jpg) no-repeat; background-position:left center">
 														<div><span>프리미티브</span></div>
 													</a>
 												</div>												
@@ -1358,88 +1150,88 @@ $(window).load(function() {
 										<div id="detail_search_brand_003" class="scroll_brand bag" style="display:none"> <!-- 가방 브랜드리스트 -->
 											<div class="brandInner">
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','허쉘','herschel'); return false;" style="background:url(./img/search/brand/bag/b_017.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','허쉘','herschel'); return false;" style="background:url(./img/b_017.jpg) no-repeat; background-position:left center">
 														<div><span>허쉘</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','스티디','stidie'); return false;" style="background:url(./img/search/brand/bag/b_006.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','스티디','stidie'); return false;" style="background:url(./img/b_006.jpg) no-repeat; background-position:left center">
 														<div><span>스티디</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','락자','rockza'); return false;" style="background:url(./img/search/brand/bag/b_002.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','락자','rockza'); return false;" style="background:url(./img/b_002.jpg) no-repeat; background-position:left center">
 														<div><span>락자</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','팬콧','pancoat'); return false;" style="background:url(./img/search/brand/bag/b_014.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','팬콧','pancoat'); return false;" style="background:url(./img/b_014.jpg) no-repeat; background-position:left center">
 														<div><span>팬콧</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','아디다스 퍼포먼스','adidasPerformance'); return false;" style="background:url(./img/search/brand/bag/b_007.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','아디다스 퍼포먼스','adidasPerformance'); return false;" style="background:url(./img/b_007.jpg) no-repeat; background-position:left center">
 														<div><span>아디다스 퍼포먼스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','푸마','puma'); return false;" style="background:url(./img/search/brand/bag/b_016.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','푸마','puma'); return false;" style="background:url(./img/b_016.jpg) no-repeat; background-position:left center">
 														<div><span>푸마</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','카고브로스','cargobros'); return false;" style="background:url(./img/search/brand/bag/b_011.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','카고브로스','cargobros'); return false;" style="background:url(./img/b_011.jpg) no-repeat; background-position:left center">
 														<div><span>카고브로스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','프레드페리','fredperry'); return false;" style="background:url(./img/search/brand/shoes/s_066.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','프레드페리','fredperry'); return false;" style="background:url(./img/s_066.jpg) no-repeat; background-position:left center">
 														<div><span>프레드페리</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','트웰라이브','twlv'); return false;" style="background:url(./img/search/brand/bag/b_013.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','트웰라이브','twlv'); return false;" style="background:url(./img/b_013.jpg) no-repeat; background-position:left center">
 														<div><span>트웰라이브</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','알슨','arson'); return false;" style="background:url(./img/search/brand/bag/b_008.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','알슨','arson'); return false;" style="background:url(./img/b_008.jpg) no-repeat; background-position:left center">
 														<div><span>알슨</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','인터랙트','interlact'); return false;" style="background:url(./img/search/brand/bag/b_009.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','인터랙트','interlact'); return false;" style="background:url(./img/b_009.jpg) no-repeat; background-position:left center">
 														<div><span>인터랙트</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','나이키','nike'); return false;" style="background:url(./img/search/brand/bag/b_001.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','나이키','nike'); return false;" style="background:url(./img/b_001.jpg) no-repeat; background-position:left center">
 														<div><span>나이키</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','리즌','reason'); return false;" style="background:url(./img/search/brand/bag/b_003.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','리즌','reason'); return false;" style="background:url(./img/b_003.jpg) no-repeat; background-position:left center">
 														<div><span>에고스노우</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','잔스포츠','jansport'); return false;" style="background:url(./img/search/brand/bag/b_010.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','잔스포츠','jansport'); return false;" style="background:url(./img/b_010.jpg) no-repeat; background-position:left center">
 														<div><span>잔스포츠</span></div>
 													</a>
 												</div>
 
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','칸켄','kanken'); return false;" style="background:url(./img/search/brand/bag/b_012.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','칸켄','kanken'); return false;" style="background:url(./img/b_012.jpg) no-repeat; background-position:left center">
 														<div><span>칸켄</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','와이유엠씨','yumc'); return false;" style="background:url(./img/search/brand/bag/b_018.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','와이유엠씨','yumc'); return false;" style="background:url(./img/b_018.jpg) no-repeat; background-position:left center">
 														<div><span>와이유엠씨</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','비클레버','bclever'); return false;" style="background:url(./img/search/brand/bag/b_019.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','비클레버','bclever'); return false;" style="background:url(./img/b_019.jpg) no-repeat; background-position:left center">
 														<div><span>비클레버</span></div>
 													</a>
 												</div>
@@ -1448,247 +1240,247 @@ $(window).load(function() {
 										<div id="detail_search_brand_005" class="scroll_brand acc" style="display:none"> <!-- 액세서리 브랜드리스트 -->
 											<div class="brandInner">
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','허프','huf'); return false;" style="background:url(./img/search/brand/acc/a_058.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','허프','huf'); return false;" style="background:url(./img/a_058.jpg) no-repeat; background-position:left center">
 														<div><span>허프</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','스투시','stussy'); return false;" style="background:url(./img/search/brand/acc/a_023.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','스투시','stussy'); return false;" style="background:url(./img/a_023.jpg) no-repeat; background-position:left center">
 														<div><span>스투시</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','오베이','obey'); return false;" style="background:url(./img/search/brand/acc/a_035.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','오베이','obey'); return false;" style="background:url(./img/a_035.jpg) no-repeat; background-position:left center">
 														<div><span>오베이</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','도프','dope'); return false;" style="background:url(./img/search/brand/acc/a_005.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','도프','dope'); return false;" style="background:url(./img/a_005.jpg) no-repeat; background-position:left center">
 														<div><span>도프</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','스테이플','staple'); return false;" style="background:url(./img/search/brand/acc/a_022.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','스테이플','staple'); return false;" style="background:url(./img/a_022.jpg) no-repeat; background-position:left center">
 														<div><span>스테이플</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','SSUR','cdf'); return false;" style="background:url(./img/search/brand/acc/a_028.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','SSUR','cdf'); return false;" style="background:url(./img/a_028.jpg) no-repeat; background-position:left center">
 														<div><span>SSUR</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','40oz NYC','40oznyc'); return false;" style="background:url(./img/search/brand/acc/a_055.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','40oz NYC','40oznyc'); return false;" style="background:url(./img/a_055.jpg) no-repeat; background-position:left center">
 														<div><span>40oz NYC</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','오드퓨쳐','oddfuture'); return false;" style="background:url(./img/search/brand/acc/a_034.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','오드퓨쳐','oddfuture'); return false;" style="background:url(./img/a_034.jpg) no-repeat; background-position:left center">
 														<div><span>오드퓨쳐</span></div>
 													</a>
 												</div>	
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','헤이터','hater'); return false;" style="background:url(./img/search/brand/acc/a_068.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','헤이터','hater'); return false;" style="background:url(./img/a_068.jpg) no-repeat; background-position:left center">
 														<div><span>헤이터</span></div>
 													</a>
 												</div>																							
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','바잘','varzar'); return false;" style="background:url(./img/search/brand/acc/a_014.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','바잘','varzar'); return false;" style="background:url(./img/a_014.jpg) no-repeat; background-position:left center">
 														<div><span>바잘</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','아메리칸니들','americanneeddle'); return false;" style="background:url(./img/search/brand/acc/a_024.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','아메리칸니들','americanneeddle'); return false;" style="background:url(./img/a_024.jpg) no-repeat; background-position:left center">
 														<div><span>아메리칸니들</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','레페스트','refest'); return false;" style="background:url(./img/search/brand/acc/a_007.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','레페스트','refest'); return false;" style="background:url(./img/a_007.jpg) no-repeat; background-position:left center">
 														<div><span>레페스트</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','테이블클로징','tableclothingco'); return false;" style="background:url(./img/search/brand/acc/a_048.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','테이블클로징','tableclothingco'); return false;" style="background:url(./img/a_048.jpg) no-repeat; background-position:left center">
 														<div><span>테이블클로징</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','캉골','kangol'); return false;" style="background:url(./img/search/brand/acc/a_044.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','캉골','kangol'); return false;" style="background:url(./img/a_044.jpg) no-repeat; background-position:left center">
 														<div><span>캉골</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','스베누','sbenu'); return false;" style="background:url(./img/search/brand/acc/a_021.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','스베누','sbenu'); return false;" style="background:url(./img/a_021.jpg) no-repeat; background-position:left center">
 														<div><span>스베누</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','리즌','reason'); return false;" style="background:url(./img/search/brand/acc/a_009.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','리즌','reason'); return false;" style="background:url(./img/a_009.jpg) no-repeat; background-position:left center">
 														<div><span>리즌</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','업프론트','upfront'); return false;" style="background:url(./img/search/brand/acc/a_027.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','업프론트','upfront'); return false;" style="background:url(./img/a_027.jpg) no-repeat; background-position:left center">
 														<div><span>업프론트</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','데드라인','deadline'); return false;" style="background:url(./img/search/brand/acc/a_004.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','데드라인','deadline'); return false;" style="background:url(./img/a_004.jpg) no-repeat; background-position:left center">
 														<div><span>데드라인</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','스놉','snob'); return false;" style="background:url(./img/search/brand/acc/a_020.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','스놉','snob'); return false;" style="background:url(./img/a_020.jpg) no-repeat; background-position:left center">
 														<div><span>스놉</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','펠틱스','feltics'); return false;" style="background:url(./img/search/brand/acc/a_054.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','펠틱스','feltics'); return false;" style="background:url(./img/a_054.jpg) no-repeat; background-position:left center">
 														<div><span>펠틱스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','오클리','oakley'); return false;" style="background:url(./img/search/brand/acc/a_036.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','오클리','oakley'); return false;" style="background:url(./img/a_036.jpg) no-repeat; background-position:left center">
 														<div><span>오클리</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','슈퍼','super'); return false;" style="background:url(./img/search/brand/acc/a_019.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','슈퍼','super'); return false;" style="background:url(./img/a_019.jpg) no-repeat; background-position:left center">
 														<div><span>슈퍼</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','에잇볼륨','eightvolume'); return false;" style="background:url(./img/search/brand/acc/a_029.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','에잇볼륨','eightvolume'); return false;" style="background:url(./img/a_029.jpg) no-repeat; background-position:left center">
 														<div><span>에잇볼륨</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','XXIX','xxix'); return false;" style="background:url(./img/search/brand/acc/a_031.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','XXIX','xxix'); return false;" style="background:url(./img/a_031.jpg) no-repeat; background-position:left center">
 														<div><span>XXIX</span></div>
 													</a>
 												</div>	
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','키','quay'); return false;" style="background:url(./img/search/brand/acc/a_047.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','키','quay'); return false;" style="background:url(./img/a_047.jpg) no-repeat; background-position:left center">
 														<div><span>키</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','마이티월렛','mightywallet'); return false;" style="background:url(./img/search/brand/acc/a_011.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','마이티월렛','mightywallet'); return false;" style="background:url(./img/a_011.jpg) no-repeat; background-position:left center">
 														<div><span>마이티월렛</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','트웰라이브','twlv'); return false;" style="background:url(./img/search/brand/acc/a_049.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','트웰라이브','twlv'); return false;" style="background:url(./img/a_049.jpg) no-repeat; background-position:left center">
 														<div><span>트웰라이브</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','컬러스파크','colorspark'); return false;" style="background:url(./img/search/brand/acc/a_046.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','컬러스파크','colorspark'); return false;" style="background:url(./img/a_046.jpg) no-repeat; background-position:left center">
 														<div><span>컬러스파크</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','사이안','cyan'); return false;" style="background:url(./img/search/brand/acc/a_017.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','사이안','cyan'); return false;" style="background:url(./img/a_017.jpg) no-repeat; background-position:left center">
 														<div><span>사이안</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','웨어판다','wearpanda'); return false;" style="background:url(./img/search/brand/acc/a_039.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','웨어판다','wearpanda'); return false;" style="background:url(./img/a_039.jpg) no-repeat; background-position:left center">
 														<div><span>웨어판다</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','펭귄','penguin'); return false;" style="background:url(./img/search/brand/shoes/s_063.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','펭귄','penguin'); return false;" style="background:url(./img/s_063.jpg) no-repeat; background-position:left center">
 														<div><span>펭귄</span></div>
 													</a>
 												</div>																								
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','월드페이머스','wfdw'); return false;" style="background:url(./img/search/brand/acc/a_038.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','월드페이머스','wfdw'); return false;" style="background:url(./img/a_038.jpg) no-repeat; background-position:left center">
 														<div><span>월드페이머스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','뉴에라','newera'); return false;" style="background:url(./img/search/brand/acc/a_060.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','뉴에라','newera'); return false;" style="background:url(./img/a_060.jpg) no-repeat; background-position:left center">
 														<div><span>뉴에라</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','엠엘비','mlb'); return false;" style="background:url(./img/search/brand/acc/a_033.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','엠엘비','mlb'); return false;" style="background:url(./img/a_033.jpg) no-repeat; background-position:left center">
 														<div><span>엠엘비</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','인세인지니어스','insanegenius'); return false;" style="background:url(./img/search/brand/acc/a_041.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','인세인지니어스','insanegenius'); return false;" style="background:url(./img/a_041.jpg) no-repeat; background-position:left center">
 														<div><span>인세인지니어스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','수어사이덜 텐던시스','suicidaltendencies'); return false;" style="background:url(./img/search/brand/acc/a_018.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','수어사이덜 텐던시스','suicidaltendencies'); return false;" style="background:url(./img/a_018.jpg) no-repeat; background-position:left center">
 														<div><span>수어사이덜 텐던시스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','비이케이','bek'); return false;" style="background:url(./img/search/brand/acc/a_016.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','비이케이','bek'); return false;" style="background:url(./img/a_016.jpg) no-repeat; background-position:left center">
 														<div><span>비이케이</span></div>
 													</a>
 												</div>												
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','깔창','insole'); return false;" style="background:url(./img/search/brand/shoes/s_005.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','깔창','insole'); return false;" style="background:url(./img/s_005.jpg) no-repeat; background-position:left center">
 														<div><span>깔창</span></div>
 													</a>
 												</div>	
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','엔젤삭스','angelsocks'); return false;" style="background:url(./img/search/brand/acc/a_032.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','엔젤삭스','angelsocks'); return false;" style="background:url(./img/a_032.jpg) no-repeat; background-position:left center">
 														<div><span>엔젤삭스</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','추카부츠','chooka'); return false;" style="background:url(./img/search/brand/shoes/s_073.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','추카부츠','chooka'); return false;" style="background:url(./img/s_073.jpg) no-repeat; background-position:left center">
 														<div><span>추카부츠</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','라스타클랫','rastaclat'); return false;" style="background:url(./img/search/brand/acc/a_061.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','라스타클랫','rastaclat'); return false;" style="background:url(./img/a_061.jpg) no-repeat; background-position:left center">
 														<div><span>라스타클랫</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','프레드페리','fredperry'); return false;" style="background:url(./img/search/brand/acc/a_056.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','프레드페리','fredperry'); return false;" style="background:url(./img/a_056.jpg) no-repeat; background-position:left center">
 														<div><span>프레드페리<span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','카나비','canavy'); return false;" style="background:url(./img/search/brand/acc/a_043.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','카나비','canavy'); return false;" style="background:url(./img/a_043.jpg) no-repeat; background-position:left center">
 														<div><span>카나비</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','팬콧','pancoat'); return false;" style="background:url(./img/search/brand/acc/a_050.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','팬콧','pancoat'); return false;" style="background:url(./img/a_050.jpg) no-repeat; background-position:left center">
 														<div><span>팬콧</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','페니','penny'); return false;" style="background:url(./img/search/brand/acc/a_052.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','페니','penny'); return false;" style="background:url(./img/a_052.jpg) no-repeat; background-position:left center">
 														<div><span>페니</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','아이스워치','icewatch'); return false;" style="background:url(./img/search/brand/acc/a_025.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','아이스워치','icewatch'); return false;" style="background:url(./img/a_025.jpg) no-repeat; background-position:left center">
 														<div><span>아이스워치</span></div>
 													</a>
 												</div>
 												<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','나이키','nike'); return false;" style="background:url(./img/search/brand/acc/a_002.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','나이키','nike'); return false;" style="background:url(./img/a_002.jpg) no-repeat; background-position:left center">
 														<div><span>나이키</span></div>
 													</a>
 												</div>	
                                             	<div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','크렙 프로텍트','crepprotect'); return false;" style="background:url(./img/search/brand/shoes/s_079.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','크렙 프로텍트','crepprotect'); return false;" style="background:url(./img/s_079.jpg) no-repeat; background-position:left center">
 														<div><span>크렙 프로텍트</span></div>
 													</a>
 												</div>
                                                 <div class="b_wrap">
-													<a href="#" onclick="setSearch('search_brand','프리미티브','primitive'); return false;" style="background:url(./img/search/brand/clothes/c_058.jpg) no-repeat; background-position:left center">
+													<a href="#" onclick="setSearch('search_brand','프리미티브','primitive'); return false;" style="background:url(./img/c_058.jpg) no-repeat; background-position:left center">
 														<div><span>프리미티브</span></div>
 													</a>
 												</div>	
