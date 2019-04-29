@@ -1438,7 +1438,7 @@ input#popup_checkbox:checked + label {
 
 #banner {
     position: absolute;
-    top: 380px;
+    top: 80%;
     left: 48%;
     margin-left: -615px;
     z-index: 91

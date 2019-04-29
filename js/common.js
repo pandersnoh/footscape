@@ -45,7 +45,7 @@ $(function () {
 //레이어팝업
 function setVisible(popId) {
 	if (popId == 'login_pop'){
-		alert('로그인 후 이용하실 수 있습니다');
+		alert('Login please!');
 		var t=document.getElementById('login');
 		t.style.display="block";
 	} else {
@@ -356,25 +356,3 @@ var currentPosition = parseInt($(".fixed").css("top"));
 						$('.fixed').attr('style','');        
 					}    
 				});
-
-/*
-     FILE ARCHIVED ON 16:53:07 Mar 15, 2015 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 01:11:52 Apr 29, 2019.
-     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
-
-     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
-     SECTION 108(a)(3)).
-*/
-/*
-playback timings (ms):
-  LoadShardBlock: 120.542 (3)
-  esindex: 0.012
-  captures_list: 142.393
-  CDXLines.iter: 12.823 (3)
-  PetaboxLoader3.datanode: 151.786 (4)
-  exclusion.robots: 0.288
-  exclusion.robots.policy: 0.269
-  RedisCDXSource: 4.739
-  PetaboxLoader3.resolve: 25.484
-  load_resource: 74.944
-*/
