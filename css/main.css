@@ -131,7 +131,7 @@ span.vis_more { font:normal 11px 'Dotum'; position:relative; top: -315px; left: 
 #main_contents5 { width:997px; height:450px; margin:0 auto; background:#ffffff; margin-bottom: 15px; border: 1px solid #e8e8e8;}
 #main_contents5 div#power_sale { width:229px; height:450px; border-right: 1px solid #e8e8e8; float:left; background:#ffffff; }
 #main_contents5 div#power_sale h3 { background:url(../img/powsale_head.jpg) no-repeat; text-indent:-9999px; margin:20px 0px 0px 15px; width:220px; height:30px }
-#main_contents5 div#power_ban1 { position:relative;float:left; width: 190px; height: 220px; padding: 30px 30px 0px 20px; border-bottom:1px solid #e8e8e8; background:url(../img/category/shoes/pow_ban_rollbg.jpg) no-repeat }
+#main_contents5 div#power_ban1 { position:relative;float:left; width: 190px; height: 220px; padding: 30px 30px 0px 20px; border-bottom:1px solid #e8e8e8; background:url(../img/pow_ban_rollbg.jpg) no-repeat }
 #main_contents5 div#power_ban1 ul#power_ban_img { width: 200px; text-align:center}
 #main_contents5 div#power_ban1 ul#power_ban_img img {border:1px solid #e8e8e8 }
 #main_contents5 div#power_ban1 ul#power_ban_img li { display:none; background:#f4f4f4 }

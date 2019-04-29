@@ -602,8 +602,8 @@ input.price{text-align:right;font-weight:bold;color:#7aa60e;font-family:verdana;
 #support #notice ul li{padding-left:50px;line-height:1.8em}
 #support #notice ul li a{color:#808080;}
 #support #notice ul li a:hover { color:#f66a1e }
-#support #notice ul li.nt{background:url(../img/footer/i_notice.png) no-repeat 0 3px;}
-#support #notice ul li.ev{background:url(../img/footer/i_event.png) no-repeat 0 3px;}
+#support #notice ul li.nt{background:url(../img/i_notice.png) no-repeat 0 3px;}
+#support #notice ul li.ev{background:url(../img/i_event.png) no-repeat 0 3px;}
 #support #notice .more{position:absolute;right:10px;top:12px}
 #support #guide{width:220px;}
 #support #guide ul{width:100%;overflow:hidden;height:116px}
