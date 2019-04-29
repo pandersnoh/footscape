@@ -77,6 +77,13 @@ input.checkbox {width:13px;height:13px;vertical-align:top;}
 ::-moz-placeholder { font:normal 13px 'Dotum' }
 :-ms-input-placeholder { font:normal 13px 'Dotum' }
 
+/* top banner */
+ul#nav_topbanner { width:211px; height:117px }
+ul#nav_topbanner li { display:none }
+ul#nav_topbanner li.first { display:block }
+a#nav_topbanner_prev { position:relative; top:-80px; left:-20px}
+a#nav_topbanner_next { position:relative; top:-80px; right:0px}
+
 /* ·login popup */
 #login { width: 430px; height:312px; z-index:999; position:absolute ; /* left: 600px; */ margin-left: 46%; /* overflow-x: hidden; */}
 div#login_area_pop { width: 430px; /* padding: 0px 0px 0px 16px; */ /* float:left ; */ margin: 0 auto; background: url(../img/login_pop_bg.png) no-repeat; height: 320px; /* margin-left: 200px; */}
