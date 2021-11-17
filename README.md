@@ -5,7 +5,7 @@
 팀장님이 디자인한 시안을 바탕으로 완성되었습니다.<br/>
 우측 사이드바 콘텐츠과 각종 모션 효과는 jQuery 등을 활용하여 구현하였습니다.
 
-구현결과 : https://pandersnoh.github.io/footscape/
+구현결과 : https://happy-goldberg-02500a.netlify.app/
 
 ## 작업개요
 - 제작년도 : 2014년
